@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
+
 
 public class NewBehaviourScript : MonoBehaviour
 {
@@ -10,6 +12,13 @@ public class NewBehaviourScript : MonoBehaviour
     {
         get => this._speed;
         set => this._speed = value;
+    }
+
+    private bool _isOnGround;
+    public bool IsOnGround
+    {
+        get => this._isOnGround;
+        set => this._isOnGround = value;
     }
 
     
@@ -59,11 +68,27 @@ public class NewBehaviourScript : MonoBehaviour
         }
         //Input.GetAxis va recupérer les frappes de fleches directionnelles pour nous en 1 ligne au lieu de faire pleins d'if else
 
-        if (Input.GetKey(KeyCode.Space))//return true quand space est press
+       
+
+        if (Input.GetKey(KeyCode.Space) && IsOnGround)//return true quand space est press
         {
-            _body.velocity = new Vector2(_body.velocity.x, _speed);
+            Jump();
         }
 
         _animator.SetBool("run", horizontalInput != 0); //il faut que le nom du parametre soit le même que la parametre de l'animator voulu
+    }
+
+    public void Jump()
+    {
+        _body.velocity = new Vector2(_body.velocity.x, _speed);
+        IsOnGround = false;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            IsOnGround = true;
+        }
     }
 }
