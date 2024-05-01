@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class TikiBehavior : MonoBehaviour
 {
+    public GameObject Point_A;
+    public GameObject Point_B;
+
+    private Transform currentPoint;
+
     [SerializeField] private float _speed; //SerializeField sert à ajuster la valeur dynamiquement dans Unity 
     public float Speed
     {
@@ -21,24 +26,40 @@ public class TikiBehavior : MonoBehaviour
 
     private Animator _animator;
 
-    public void Awake() //methdode qui est appellé à chaque fois que le script est chargé (point d'entré)
-    {
-        //references 
-        _animator = GetComponent<Animator>();
-        _body = GetComponent<Rigidbody2D>(); //va aller dans l'instance joueur et chercher un RigidBody2D, il est ensuite stocké dans cette variable
-    }
-
-    //// Start is called before the first frame update
-    //void Start()
+    //public void Awake() //methdode qui est appellé à chaque fois que le script est chargé (point d'entré)
     //{
         
     //}
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        //references 
+        _animator = GetComponent<Animator>();
+        _body = GetComponent<Rigidbody2D>(); //va aller dans l'instance joueur et chercher un RigidBody2D, il est ensuite stocké dans cette variable
+        currentPoint = Point_B.transform; //le point que le tiki est en train d'atteindre
+        _animator.SetBool("isRunning", true);//enclenche la marche du tiki
+    }
+
     // Update is called once per frame
     void Update()
     {
-        //ici on va utiliser la methode velocity va mouvoir notre joueur à x et y distance par seconde
-        //si on renseigne (1,1) konky kong bougera en diagonale à 1 unité par seconde
-        _body.velocity = new Vector2(_body.velocity.x * Speed/2 * _speed, _body.velocity.y);
+        Vector2 point = currentPoint.position - transform.position;//transform.positon est la position en temps réel du joueur
+        if (currentPoint == Point_B.transform)
+        {
+            _body.velocity = new Vector2(_speed,0);
+        }
+        else _body.velocity = new Vector2(-_speed, 0);
+
+        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == Point_B.transform)
+        {
+            currentPoint = Point_A.transform;
+        }
+
+        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == Point_A.transform)
+        {
+            currentPoint = Point_B.transform;
+        }
+
     }
 }
