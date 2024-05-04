@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 540401581}
   m_Layer: 0
   m_Name: TikiBuzz
-  m_TagString: Untagged
+  m_TagString: Tiki
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -263,9 +263,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6efc3137b25d54575b0e9acb0746efe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _speed: 1
   Point_A: {fileID: 1681894270}
   Point_B: {fileID: 2072713518}
-  _speed: 1
 --- !u!95 &540401582
 Animator:
   serializedVersion: 5
@@ -427,7 +427,7 @@ GameObject:
   - component: {fileID: 735338303}
   m_Layer: 0
   m_Name: TikiGoon
-  m_TagString: Untagged
+  m_TagString: Tiki
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -444,9 +444,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f264d33f296e5465d85585b28f727962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _speed: 3
   Point_A: {fileID: 745652964}
   Point_B: {fileID: 1941408069}
-  _speed: 3
 --- !u!61 &735338299
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -580,7 +580,7 @@ Transform:
   m_GameObject: {fileID: 735338297}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.18, y: -0.19, z: -0.01701573}
+  m_LocalPosition: {x: -12.18, y: -0.19000006, z: -0.01701573}
   m_LocalScale: {x: 1.1582128, y: 1.2202815, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -954,8 +954,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 735338302}
   - {fileID: 540401580}
+  - {fileID: 735338302}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1681894270
@@ -1084,6 +1084,8 @@ GameObject:
   - component: {fileID: 1924617323}
   - component: {fileID: 1924617324}
   - component: {fileID: 1924617325}
+  - component: {fileID: 1924617326}
+  - component: {fileID: 1924617327}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1137,7 +1139,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.32, y: 0.32}
+  m_Size: {x: 0.96, y: 0.96}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1195,7 +1197,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.32, y: 0.32}
-    newSize: {x: 0.32, y: 0.32}
+    newSize: {x: 0.96, y: 0.96}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -1264,6 +1266,34 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1924617326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924617319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c239eb9dbf4fa4fa98eac119e62d2b17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHealth: 0
+  CurrentHealth: 0
+  animator: {fileID: 0}
+--- !u!114 &1924617327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924617319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69d0ce326b1e245be875dee8b7e7b21c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pushingForce: 10
 --- !u!1 &1941408069
 GameObject:
   m_ObjectHideFlags: 0
