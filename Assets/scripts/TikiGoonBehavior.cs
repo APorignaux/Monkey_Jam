@@ -39,5 +39,19 @@ public class TikiBehavior : Tiki
         {
             currentPoint = Point_B.transform;
         }
+
+
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            if(currentPoint == Point_B.transform)
+            {
+                currentPoint = Point_A.transform;
+            }
+
+            else currentPoint = Point_B.transform;
+        }
     }
 }

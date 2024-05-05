@@ -61,7 +61,7 @@ namespace Monkey_Jam_Game
 
     public void Jump()
     {
-        _body.velocity = new Vector2(_body.velocity.x, _speed);
+        _body.velocity = new Vector2(_body.velocity.x, _speed*1.1f);
         IsOnGround = false;
     }
 
