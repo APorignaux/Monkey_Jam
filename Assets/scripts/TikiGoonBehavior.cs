@@ -23,8 +23,8 @@ public class TikiBehavior : Tiki
 
     public override void Mouvement(bool state)
     {
-        Vector2 point = currentPoint.position - transform.position;//transform.positon est la position en temps réel du joueur
-        if (currentPoint == Point_B.transform)
+        float point = currentPoint.position.x - transform.position.x;//transform.positon est la position en temps réel du joueur
+        if (currentPoint.position.x == Point_B.transform.position.x)
         {
             _body.velocity = new Vector2(_speed, 0);
         }
@@ -44,7 +44,7 @@ public class TikiBehavior : Tiki
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Ground")
+        if (collision.gameObject.CompareTag("Tiki"))
         {
             if(currentPoint == Point_B.transform)
             {

@@ -7,7 +7,8 @@ namespace Monkey_Jam_Game
 {
     public class PlayerMovement : Personnage
     {
-        public PlayerManager playerManager; 
+        public PlayerManager playerManager;
+        [SerializeField]private float jumpingPower = 2f;
 
 
         //methdode qui est appellé à chaque fois que le script est chargé (point d'entré)
@@ -22,13 +23,26 @@ namespace Monkey_Jam_Game
         void Update()
         {
             Mouvement(true);
+            if (Input.GetKey(KeyCode.R))
+            {
+                _body.transform.position = new Vector3(0, -2, 0);
+            }
+
+            if (Input.GetKey(KeyCode.G))
+            {
+                _body.transform.position = new Vector3(50, 5, 0);
+            }
+
         }
 
         //gestion des collisions
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            Destroy(collider.gameObject);
-            CoinCollector(collider);
+            if (collider.gameObject.CompareTag("Token"))
+            {
+                Destroy(collider.gameObject);
+                CoinCollector(collider);
+            }
         }
 
         
@@ -58,12 +72,7 @@ namespace Monkey_Jam_Game
                 }
                 //Input.GetAxis va recupérer les frappes de fleches directionnelles pour nous en 1 ligne au lieu de faire pleins d'if else
 
-
-
-                if (Input.GetKey(KeyCode.Space) && IsOnGround)//return true quand space est press
-                {
-                    Jump();
-                }
+                Jump();
 
                 _animator.SetBool("run", horizontalInput != 0); //il faut que le nom du parametre soit le même que la parametre de l'animator voulu
             }
@@ -72,8 +81,16 @@ namespace Monkey_Jam_Game
 
         public void Jump()
         {
-            _body.velocity = new Vector2(_body.velocity.x, _speed * 1.1f);
-            IsOnGround = false;
+            if (Input.GetKey(KeyCode.Space) && IsOnGround)//return true quand space est press
+            {
+                _body.velocity = new Vector2(_body.velocity.x, jumpingPower);
+                IsOnGround = false;
+            }
+
+            if (Input.GetButtonUp("Jump") && _body.velocity.y > 0f)
+            {
+                _body.velocity = new Vector2(_body.velocity.x, _body.velocity.y * 0.5f);
+            }
         }
 
         public void PayerIsOnGround(Collision2D collision)//verifie si DK est sur le sol

@@ -35,26 +35,27 @@ public class CollisionController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "TikiGoon" || collision.gameObject.name == "TikiBuzz")
+        if (collision.gameObject.CompareTag("Tiki"))
         {
             Debug.Log("enter");
             _animator.SetBool("isDamaged", true);
-            
-            _body.velocity = new Vector2(Body.velocity.x + PushingForce, Body.velocity.y + PushingForce);
+
+            if(Body.velocity.x < 0) 
+            _body.velocity = new Vector2(-10, Body.velocity.y);
         }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "TikiGoon" || collision.gameObject.name == "TikiBuzz")
-        {
+        if (collision.gameObject.CompareTag("Tiki"))
+        { 
             Debug.Log("stay");
         }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "TikiGoon" || collision.gameObject.name == "TikiBuzz")
+        if (collision.gameObject.CompareTag("Tiki"))
         {
             Debug.Log("exit");
             _animator.SetBool("isDamaged", false);
