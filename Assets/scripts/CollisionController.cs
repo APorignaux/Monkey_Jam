@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class CollisionController : MonoBehaviour
 {
-    [SerializeField] private float _pushingForce; //SerializeField sert à ajuster la valeur dynamiquement dans Unity 
-    public float PushingForce
-    {
-        get => this._pushingForce;
-        set => this._pushingForce = value;
-    }
+    
 
     private Rigidbody2D _body; //variable qui contient le corps du joueur (objet à manipuler)
     public Rigidbody2D Body
@@ -33,32 +28,5 @@ public class CollisionController : MonoBehaviour
     //    set => this._isDamaged = value;
     //}
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Tiki"))
-        {
-            Debug.Log("enter");
-            _animator.SetBool("isDamaged", true);
-
-            if(Body.velocity.x < 0) 
-            _body.velocity = new Vector2(-10, Body.velocity.y);
-        }
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Tiki"))
-        { 
-            Debug.Log("stay");
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Tiki"))
-        {
-            Debug.Log("exit");
-            _animator.SetBool("isDamaged", false);
-        }
-    }
+    
 }

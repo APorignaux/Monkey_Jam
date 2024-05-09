@@ -7,6 +7,13 @@ namespace Monkey_Jam_Game
 {
     public class PlayerMovement : Personnage
     {
+        [SerializeField] private float _pushingForce; //SerializeField sert à ajuster la valeur dynamiquement dans Unity 
+        public float PushingForce
+        {
+            get => this._pushingForce;
+            set => this._pushingForce = value;
+        }
+
         public PlayerManager playerManager;
         [SerializeField]private float jumpingPower = 2f;
 
@@ -22,7 +29,7 @@ namespace Monkey_Jam_Game
         // Update is called once per frame
         void Update()
         {
-            Mouvement(true);
+            
             if (Input.GetKey(KeyCode.R))
             {
                 _body.transform.position = new Vector3(0, -2, 0);
@@ -45,11 +52,39 @@ namespace Monkey_Jam_Game
             }
         }
 
-        
+        //collision controller
         private void OnCollisionEnter2D(Collision2D collision)
         {
             PayerIsOnGround(collision);
+            if (collision.gameObject.CompareTag("Tiki"))
+            {
+                UnityEngine.Debug.Log("enter");
+                _animator.SetBool("isDamaged", true);
+                
+                playerManager.TakeDamage(1);
+                UnityEngine.Debug.Log("damage");
+                if (Body.velocity.x < 0)
+                    _body.velocity = new Vector2(-10, Body.velocity.y);
+            }
         }
+
+        private void OnCollisionStay2D(Collision2D collision)
+        {
+            if (collision.gameObject.CompareTag("Tiki"))
+            {
+                UnityEngine.Debug.Log("stay");
+            }
+        }
+
+        private void OnCollisionExit2D(Collision2D collision)
+        {
+            if (collision.gameObject.CompareTag("Tiki"))
+            {
+                UnityEngine.Debug.Log("exit");
+                _animator.SetBool("isDamaged", false);
+            }
+        }
+
         //gestion des collisions
 
         public override void Mouvement(bool state)
@@ -76,6 +111,7 @@ namespace Monkey_Jam_Game
 
                 _animator.SetBool("run", horizontalInput != 0); //il faut que le nom du parametre soit le même que la parametre de l'animator voulu
             }
+            else UnityEngine.Debug.Log("can't move");
 
         }
 
@@ -108,6 +144,8 @@ namespace Monkey_Jam_Game
                 playerManager.coinCount++;
             }
         }
+
+        
     }
 }
 
