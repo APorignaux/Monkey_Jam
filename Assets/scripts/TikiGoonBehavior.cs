@@ -42,6 +42,7 @@ public class TikiBehavior : Tiki
 
 
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Tiki"))

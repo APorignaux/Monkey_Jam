@@ -17,7 +17,6 @@ namespace Monkey_Jam_Game
         public PlayerManager playerManager;
         [SerializeField]private float jumpingPower = 2f;
 
-
         //methdode qui est appellé à chaque fois que le script est chargé (point d'entré)
         public void Awake() 
         {
@@ -37,7 +36,7 @@ namespace Monkey_Jam_Game
 
             if (Input.GetKey(KeyCode.G))
             {
-                _body.transform.position = new Vector3(50, 5, 0);
+                _body.transform.position = new Vector3(190, -1, 0);
             }
 
         }
@@ -47,10 +46,27 @@ namespace Monkey_Jam_Game
         {
             if (collider.gameObject.CompareTag("Token"))
             {
+                playerManager.CollectCoin(collider);
+            }
+
+            if (collider.gameObject.CompareTag("Tiki"))
+            { 
+                collider.gameObject.transform.localScale = new Vector3(collider.gameObject.transform.localScale.x, 0.4f,1);
                 Destroy(collider.gameObject);
-                CoinCollector(collider);
+                //StartCoroutine((IEnumerator)KillTiki(collider));
+            }
+
+            if (collider.gameObject.name == "WinningPoint")
+            {
+                playerManager.Win();
             }
         }
+
+        //public IEnumerable KillTiki(Collider2D collider)
+        //{
+        //    yield return new WaitForSeconds(1);
+        //    Destroy(collider.gameObject);
+        //}
 
         //collision controller
         private void OnCollisionEnter2D(Collision2D collision)
@@ -59,7 +75,7 @@ namespace Monkey_Jam_Game
             if (collision.gameObject.CompareTag("Tiki"))
             {
                 UnityEngine.Debug.Log("enter");
-                _animator.SetBool("isDamaged", true);
+                
                 
                 playerManager.TakeDamage(1);
                 UnityEngine.Debug.Log("damage");
@@ -73,6 +89,7 @@ namespace Monkey_Jam_Game
             if (collision.gameObject.CompareTag("Tiki"))
             {
                 UnityEngine.Debug.Log("stay");
+                _animator.SetBool("isDamaged", true);
             }
         }
 
@@ -134,14 +151,6 @@ namespace Monkey_Jam_Game
             if (collision.gameObject.tag == "Ground")
             {
                 IsOnGround = true;
-            }
-        }
-
-        public void CoinCollector(Collider2D collider)
-        {
-            if (collider.gameObject.CompareTag("Token"))
-            {
-                playerManager.coinCount++;
             }
         }
 

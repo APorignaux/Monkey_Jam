@@ -47,7 +47,7 @@ public class TikiBuzzMouvement : Tiki
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Ground")
+        if (collision.gameObject.tag == "Ground" || collision.gameObject.CompareTag("Tiki"))
         {
             if (currentPoint == Point_B.transform)
             {

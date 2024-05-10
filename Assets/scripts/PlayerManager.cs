@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
@@ -11,12 +12,15 @@ public class PlayerManager : MonoBehaviour
     public Image Heart1;
     public Image Heart2;
     public Sprite EmptyHeart;
+    public Sprite FullFilledHeart;
     public Image GameOverScreen;
+    public Image WinnigScreen;
     public Personnage player;
 
     public int coinCount = 0;
     public Text coinText;
 
+    public AudioManager audioManager;
     public Animator animator;
 
     // Start is called before the first frame update
@@ -34,30 +38,70 @@ public class PlayerManager : MonoBehaviour
             this.TakeDamage(1);
             player.Body.transform.position = new Vector3(player.Body.transform.position.x - 5, 0, 0);
         }
+
         if (CurrentHealth <= 0)
         {
             GameOverScreen.gameObject.SetActive(true);
-            player.Mouvement(false);
+            Destroy(player);
         }
+
         else player.Mouvement(true); ;
+
+        if(coinCount == 10 && CurrentHealth != MaxHealth)
+        {
+            CurrentHealth++;
+            coinCount = 0;
+        }
+
+        switch (CurrentHealth)
+        {
+            case 2:
+                Heart2.sprite = EmptyHeart;
+                Heart0.sprite = FullFilledHeart;
+                Heart1.sprite = FullFilledHeart;
+                break;
+            case 1:
+                Heart2.sprite = EmptyHeart;
+                Heart1.sprite = EmptyHeart;
+                Heart0.sprite = FullFilledHeart;
+                break;
+            case 0:
+                Heart2.sprite = EmptyHeart;
+                Heart1.sprite = EmptyHeart;
+                Heart0.sprite = EmptyHeart;
+                break;
+            case 3:
+                Heart0.sprite = FullFilledHeart;
+                Heart1.sprite = FullFilledHeart;
+                Heart2.sprite = FullFilledHeart;
+                break;
+        }
+    }
+
+    public void Win()
+    {
+        WinnigScreen.gameObject.SetActive(true);
+        audioManager.LevelGoalSound();
+        Invoke("LoadMainMenu", 5);
+    }
+
+    public void CollectCoin(Collider2D collider)
+    {
+        Destroy(collider.gameObject);
+        coinCount++;
+        audioManager.CollectACoinSound();
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 
     public void TakeDamage(int damage)
     {
         CurrentHealth -= damage;
         Debug.Log("damage");
-        switch (CurrentHealth)
-        {
-            case 2:
-                Heart2.sprite = EmptyHeart;
-                break;
-            case 1:
-                Heart1.sprite = EmptyHeart;
-                break;
-            case 0:
-                Heart0.sprite = EmptyHeart;
-                break;
-        }
+        
 
         if(CurrentHealth <= 0)
         {
