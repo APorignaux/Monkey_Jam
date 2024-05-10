@@ -29,7 +29,7 @@ namespace Monkey_Jam_Game
         void Update()
         {
             
-            if (Input.GetKey(KeyCode.R))
+            if (Input.GetKey(KeyCode.P))
             {
                 _body.transform.position = new Vector3(0, -2, 0);
             }
@@ -44,21 +44,21 @@ namespace Monkey_Jam_Game
         //gestion des collisions
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            if (collider.gameObject.CompareTag("Token"))
+            if (collider.gameObject.name == "WinningPoint")
+            {
+                playerManager.Win();
+            }
+
+            else if (collider.gameObject.CompareTag("Token"))
             {
                 playerManager.CollectCoin(collider);
             }
 
-            if (collider.gameObject.CompareTag("Tiki"))
+            else if (collider.gameObject.CompareTag("Tiki"))
             { 
                 collider.gameObject.transform.localScale = new Vector3(collider.gameObject.transform.localScale.x, 0.4f,1);
                 Destroy(collider.gameObject);
                 //StartCoroutine((IEnumerator)KillTiki(collider));
-            }
-
-            if (collider.gameObject.name == "WinningPoint")
-            {
-                playerManager.Win();
             }
         }
 

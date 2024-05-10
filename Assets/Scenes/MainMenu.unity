@@ -1096,6 +1096,7 @@ MonoBehaviour:
   collectACoin: {fileID: 8300000, guid: 7cbe8e760f55741deaf2614c0208a546, type: 3}
   extraLife: {fileID: 8300000, guid: 52125941f0dd742d7ae4c8c881db9f2b, type: 3}
   areaUnlocked: {fileID: 8300000, guid: 1d3201235457f4645b6139dc67c6eb17, type: 3}
+  levelGoal: {fileID: 0}
 --- !u!4 &1396277299
 Transform:
   m_ObjectHideFlags: 0

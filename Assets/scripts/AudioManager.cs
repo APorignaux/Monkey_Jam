@@ -33,4 +33,10 @@ public class AudioManager : MonoBehaviour
         SFXSource.clip = levelGoal;
         SFXSource.Play();
     }
+
+    public void DeadSound()
+    {
+        SFXSource.clip = death;
+        SFXSource.Play();
+    }
 }
