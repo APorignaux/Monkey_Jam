@@ -8,13 +8,13 @@ namespace Monkey_Jam_Game
     public class PlayerMovement : Personnage
     {
         [SerializeField] private float _pushingForce; //SerializeField sert à ajuster la valeur dynamiquement dans Unity 
-        public float PushingForce
+        public float PushingForce //force avec laquelle je joueur va être poussé par les tiki
         {
             get => this._pushingForce;
             set => this._pushingForce = value;
         }
 
-        public PlayerManager playerManager;
+        public PlayerManager playerManager; //ref au player manager
         [SerializeField]private float jumpingPower = 2f;
 
         //methdode qui est appellé à chaque fois que le script est chargé (point d'entré)
@@ -28,7 +28,7 @@ namespace Monkey_Jam_Game
         // Update is called once per frame
         void Update()
         {
-            
+            //developper tools
             if (Input.GetKey(KeyCode.P))
             {
                 _body.transform.position = new Vector3(0, -2, 0);
@@ -44,20 +44,21 @@ namespace Monkey_Jam_Game
         //gestion des collisions
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            if (collider.gameObject.name == "WinningPoint")
+            if (collider.gameObject.name == "WinningPoint") //event d'arrivé fin de niveau
             {
                 playerManager.Win();
             }
 
-            else if (collider.gameObject.CompareTag("Token"))
+            else if (collider.gameObject.CompareTag("Token")) //ramasse un token
             {
                 playerManager.CollectCoin(collider);
             }
 
-            else if (collider.gameObject.CompareTag("Tiki"))
-            { 
+            else if (collider.gameObject.CompareTag("Tiki")) //colliser avec tiki sur la tête (il y a 2 box collider)
+            {
                 collider.gameObject.transform.localScale = new Vector3(collider.gameObject.transform.localScale.x, 0.4f,1);
-                Destroy(collider.gameObject);
+                playerManager.KillTiki(collider);
+                _body.velocity = new Vector2(_body.transform.position.x,8);
                 //StartCoroutine((IEnumerator)KillTiki(collider));
             }
         }
@@ -72,7 +73,7 @@ namespace Monkey_Jam_Game
         private void OnCollisionEnter2D(Collision2D collision)
         {
             PayerIsOnGround(collision);
-            if (collision.gameObject.CompareTag("Tiki"))
+            if (collision.gameObject.CompareTag("Tiki"))//collision tiki sur les coté ou le bas = dégat
             {
                 UnityEngine.Debug.Log("enter");
                 

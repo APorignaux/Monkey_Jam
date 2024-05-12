@@ -15,6 +15,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip extraLife;
     public AudioClip areaUnlocked;
     public AudioClip levelGoal;
+    public AudioClip stomp;
 
     public void Start()
     {
@@ -37,6 +38,18 @@ public class AudioManager : MonoBehaviour
     public void DeadSound()
     {
         SFXSource.clip = death;
+        SFXSource.Play();
+    }
+
+    public void extraLifeSound()
+    {
+        SFXSource.clip = extraLife;
+        SFXSource.Play();
+    }
+
+    public void StompSound()
+    {
+        SFXSource.clip = stomp;
         SFXSource.Play();
     }
 }

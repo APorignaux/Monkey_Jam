@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TikiBehavior : Tiki
 {
-    // Start is called before the first frame update
     void Start()
     {
         //references 
@@ -14,7 +13,6 @@ public class TikiBehavior : Tiki
         _animator.SetBool("isRunning", true);//enclenche la marche du tiki
     }
 
-    // Update is called once per frame
     void Update()
     {
         Mouvement(true);
@@ -31,12 +29,12 @@ public class TikiBehavior : Tiki
 
         if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == Point_B.transform)
         {
-            currentPoint = Point_A.transform;
+            currentPoint = Point_A.transform; //arrive à la fin de patrouille et change de direction
         }
 
         if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == Point_A.transform)
         {
-            currentPoint = Point_B.transform;
+            currentPoint = Point_B.transform; //arrive à la fin de patrouille et change de direction
         }
 
 
@@ -44,7 +42,7 @@ public class TikiBehavior : Tiki
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Tiki"))
+        if (collision.gameObject.CompareTag("Tiki")) //sert à ne pas rester bloquer sur les murs et autres tiki
         {
             if(currentPoint == Point_B.transform)
             {

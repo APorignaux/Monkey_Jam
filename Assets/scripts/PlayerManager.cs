@@ -41,27 +41,23 @@ public class PlayerManager : MonoBehaviour
         if (Alive)
         {
 
-            coinText.text = coinCount.ToString();
+            coinText.text = coinCount.ToString(); //retranscrit le nombre de banane dans le canva
             if (CurrentHealth > 0) player.Mouvement(true);
 
             if (AsFallen() && CurrentHealth > 0)
             {
                 this.TakeDamage(1);
-                player.Body.transform.position = new Vector3(player.Body.transform.position.x - 5, 0, 0);
+                player.Body.transform.position = new Vector3(player.Body.transform.position.x - 5, 0, 0); //si joueur tombe trou est replacé 5x avant la chute
             }
 
-            //if (CurrentHealth <= 0)
-            //{
-            //    Lose();
-            //}
-
-            if (coinCount == 10 && CurrentHealth != MaxHealth)
+            if (coinCount >= 10 && CurrentHealth != MaxHealth) //système de régènaration de vie
             {
                 CurrentHealth++;
-                coinCount = 0;
+                audioManager.extraLifeSound();
+                coinCount -= 10;
             }
 
-            switch (CurrentHealth)
+            switch (CurrentHealth) //système qui gère le canva des coeurs
             {
                 case 2:
                     Heart2.sprite = EmptyHeart;
@@ -99,11 +95,11 @@ public class PlayerManager : MonoBehaviour
 
         if (Input.GetKey(KeyCode.R))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);//realance un nouveau niveau
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(0);//va au menu du jeu
         }
     }
 
@@ -111,7 +107,13 @@ public class PlayerManager : MonoBehaviour
     {
         WinnigScreen.gameObject.SetActive(true);
         audioManager.LevelGoalSound();
-        Invoke("LoadMainMenu", 5);
+        Invoke("LoadMainMenu", 5);//va au main menu après 5sec
+    }
+
+    public void KillTiki(Collider2D collider)
+    {
+        Destroy(collider.gameObject);
+        audioManager.StompSound();
     }
 
     public void CollectCoin(Collider2D collider)
@@ -123,8 +125,8 @@ public class PlayerManager : MonoBehaviour
 
     public void LoadMainMenu()
     {
-        SceneManager.LoadScene(0);
-        Time.timeScale = 1f;
+        SceneManager.LoadScene(0);//charge le main menu 
+        Time.timeScale = 1f;//unfreez le jeu
     }
 
     public void Quitgame()
@@ -136,18 +138,9 @@ public class PlayerManager : MonoBehaviour
     {
         CurrentHealth -= damage;
         Debug.Log("damage");
-        
-
-        //if(CurrentHealth <= 0)
-        //{
-        //    //dead
-        //    //play death animation
-        //    //animator.SetBool("isDead", true);
-        //    //game over screen
-        //}
     }
 
-    public bool AsFallen()
+    public bool AsFallen()//check si le joueur est tombé
     {
         bool state;
         if (player.transform.position.y < -7) state = true;

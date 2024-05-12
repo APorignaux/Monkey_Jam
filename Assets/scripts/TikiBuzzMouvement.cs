@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class TikiBuzzMouvement : Tiki
 {
-    //public void Awake() //methdode qui est appellé à chaque fois que le script est chargé (point d'entré)
-    //{
-
-    //}
-
-    // Start is called before the first frame update
     void Start()
     {
         //references 
@@ -34,12 +28,12 @@ public class TikiBuzzMouvement : Tiki
         }
         else _body.velocity = new Vector2(-_speed, 0);
 
-        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == Point_B.transform)
+        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == Point_B.transform) //arrive à la fin de patrouille et change de direction
         {
             currentPoint = Point_A.transform;
         }
 
-        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == Point_A.transform)
+        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == Point_A.transform) //arrive à la fin de patrouille et change de direction
         {
             currentPoint = Point_B.transform;
         }
@@ -47,7 +41,7 @@ public class TikiBuzzMouvement : Tiki
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Ground" || collision.gameObject.CompareTag("Tiki"))
+        if (collision.gameObject.tag == "Ground" || collision.gameObject.CompareTag("Tiki")) //sert à ne pas rester bloquer sur les murs et autres tiki
         {
             if (currentPoint == Point_B.transform)
             {
