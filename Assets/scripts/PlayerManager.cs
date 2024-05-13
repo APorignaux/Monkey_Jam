@@ -61,8 +61,8 @@ public class PlayerManager : MonoBehaviour
             {
                 case 2:
                     Heart2.sprite = EmptyHeart;
-                    Heart0.sprite = FullFilledHeart;
                     Heart1.sprite = FullFilledHeart;
+                    Heart0.sprite = FullFilledHeart;
                     break;
                 case 1:
                     Heart2.sprite = EmptyHeart;
